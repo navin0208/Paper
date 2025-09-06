@@ -16,7 +16,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # MongoDB setup - using same database as test3.py
-client = MongoClient("mongodb://localhost:27017/")
+
 db = client["hybrid_pdf_processor"]  # For queue management
 collection = db["processing_queue"]
 questions_collection = db["questions"]  # For questions storage
