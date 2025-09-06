@@ -265,6 +265,14 @@ def heartbeat():
 
     return jsonify({'message': 'Heartbeat received'})
 
+from flask import send_from_directory
+
+@app.route('/download/<filename>')
+def download_file(filename):
+    """Serve uploaded PDFs to PC processors"""
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
+
 
 @app.route('/api/pc_status')
 def pc_status():
