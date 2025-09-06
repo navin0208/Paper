@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Processing Queue - Hybrid PDF Processor{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="fas fa-list me-2"></i>Processing Queue
+    </h2>
+    <div>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>Upload New PDF
+        </a>
+    </div>
+</div>
+
+{% if jobs %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fas fa-tasks me-2"></i>Processing Jobs
+            <small class="text-muted ms-2">(Auto-refreshes every 30 seconds)</small>
+        </h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Job ID</th>
+                        <th>Filename</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Processed</th>
+                        <th>Completed</th>
+                        <th>Questions</th>
+                        <th>PC Processor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>
+                            <code class="text-muted">{{ job.job_id[:8] }}...</code>
+                        </td>
+                        <td>
+                            <i class="fas fa-file-pdf text-danger me-2"></i>
+                            {{ job.filename }}
+                        </td>
+                        <td>
+                            {% if job.status == 'queued' %}
+                                <span class="badge bg-warning status-badge">
+                                    <i class="fas fa-clock me-1"></i>Queued
+                                </span>
+                            {% elif job.status == 'processing' %}
+                                <span class="badge bg-info status-badge">
+                                    <i class="fas fa-cog fa-spin me-1"></i>Processing
+                                </span>
+                            {% elif job.status == 'completed' %}
+                                <span class="badge bg-success status-badge">
+                                    <i class="fas fa-check me-1"></i>Completed
+                                </span>
+                            {% elif job.status == 'error' %}
+                                <span class="badge bg-danger status-badge">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Error
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <small class="text-muted">
+                                {{ job.created_at.strftime('%H:%M:%S') if job.created_at else 'N/A' }}
+                            </small>
+                        </td>
+                        <td>
+                            <small class="text-muted">
+                                {{ job.processed_at.strftime('%H:%M:%S') if job.processed_at else 'N/A' }}
+                            </small>
+                        </td>
+                        <td>
+                            <small class="text-muted">
+                                {{ job.completed_at.strftime('%H:%M:%S') if job.completed_at else 'N/A' }}
+                            </small>
+                        </td>
+                        <td>
+                            {% if job.questions_count > 0 %}
+                                <span class="badge bg-success">{{ job.questions_count }}</span>
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if job.pc_processor %}
+                                <small class="text-success">
+                                    <i class="fas fa-desktop me-1"></i>{{ job.pc_processor }}
+                                </small>
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if job.error_message %}
+                    <tr class="table-danger">
+                        <td colspan="8">
+                            <div class="alert alert-danger mb-0 py-2">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Error:</strong> {{ job.error_message }}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics -->
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-warning">{{ jobs|selectattr('status', 'equalto', 'queued')|list|length }}</h5>
+                <small class="text-muted">Queued</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-info">{{ jobs|selectattr('status', 'equalto', 'processing')|list|length }}</h5>
+                <small class="text-muted">Processing</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-success">{{ jobs|selectattr('status', 'equalto', 'completed')|list|length }}</h5>
+                <small class="text-muted">Completed</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="text-danger">{{ jobs|selectattr('status', 'equalto', 'error')|list|length }}</h5>
+                <small class="text-muted">Errors</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+    <h4 class="text-muted">No jobs in queue</h4>
+    <p class="text-muted">Upload a PDF to start processing</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">
+        <i class="fas fa-upload me-2"></i>Upload PDF
+    </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Auto-refresh every 30 seconds
+    setTimeout(() => {
+        location.reload();
+    }, 30000);
+</script>
+{% endblock %}
