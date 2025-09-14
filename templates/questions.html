@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Questions - Hybrid PDF Processor{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="fas fa-question-circle me-2"></i>Extracted Questions
+    </h2>
+    <div>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>Upload New PDF
+        </a>
+        <a href="{{ url_for('view_queue') }}" class="btn btn-outline-primary">
+            <i class="fas fa-list me-1"></i>View Queue
+        </a>
+    </div>
+</div>
+
+{% if questions %}
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="form-control" id="searchInput" placeholder="Search questions...">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="d-flex gap-2">
+            <select class="form-select" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+            <select class="form-select" id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="Numerical">Numerical</option>
+                <option value="Theoretical">Theoretical</option>
+                <option value="Conceptual">Conceptual</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="questionsContainer">
+    {% for question in questions %}
+    <div class="col-lg-6 mb-4 question-item" 
+         data-question="{{ question.question|lower }}" 
+         data-status="{{ question.status }}"
+         data-category="{{ question.question_category }}">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Question #{{ question.question_id }}</h6>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="editQuestion({{ question.question_id }})">
+                            <i class="fas fa-edit me-2"></i>Edit
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="deleteQuestion({{ question.question_id }})">
+                            <i class="fas fa-trash me-2"></i>Delete
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <strong>Question:</strong>
+                    <p class="mt-1">{{ question.question[:200] }}{% if question.question|length > 200 %}...{% endif %}</p>
+                </div>
+                
+                {% if question.option1 or question.option2 or question.option3 or question.option4 %}
+                <div class="mb-3">
+                    <strong>Options:</strong>
+                    <div class="row mt-2">
+                        {% if question.option1 %}
+                        <div class="col-6 mb-2">
+                            <span class="badge bg-light text-dark">A) {{ question.option1[:50] }}{% if question.option1|length > 50 %}...{% endif %}</span>
+                        </div>
+                        {% endif %}
+                        {% if question.option2 %}
+                        <div class="col-6 mb-2">
+                            <span class="badge bg-light text-dark">B) {{ question.option2[:50] }}{% if question.option2|length > 50 %}...{% endif %}</span>
+                        </div>
+                        {% endif %}
+                        {% if question.option3 %}
+                        <div class="col-6 mb-2">
+                            <span class="badge bg-light text-dark">C) {{ question.option3[:50] }}{% if question.option3|length > 50 %}...{% endif %}</span>
+                        </div>
+                        {% endif %}
+                        {% if question.option4 %}
+                        <div class="col-6 mb-2">
+                            <span class="badge bg-light text-dark">D) {{ question.option4[:50] }}{% if question.option4|length > 50 %}...{% endif %}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="row">
+                    <div class="col-6">
+                        <small class="text-muted">
+                            <i class="fas fa-tag me-1"></i>{{ question.question_category }}
+                        </small>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">
+                            <i class="fas fa-star me-1"></i>{{ question.marks }} marks
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Additional metadata fields -->
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <small class="text-muted">
+                            <i class="fas fa-calendar me-1"></i>
+                            {% if question.date %}
+                                {{ question.date.strftime('%Y-%m-%d') }}
+                            {% else %}
+                                {{ question.created_at.strftime('%Y-%m-%d') }}
+                            {% endif %}
+                        </small>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">
+                            <i class="fas fa-user me-1"></i>User #{{ question.user_id }}
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Foreign key relationships -->
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div class="d-flex flex-wrap gap-1">
+                            <span class="badge bg-info">Chapter: {{ question.chapter_master_chapter_id }}</span>
+                            <span class="badge bg-secondary">Subject: {{ question.subject_master_subject_id }}</span>
+                            <span class="badge bg-primary">Standard: {{ question.standard_master_standard_id }}</span>
+                            {% if question.entrance_exam_master_entrance_exam_id %}
+                            <span class="badge bg-warning">Exam: {{ question.entrance_exam_master_entrance_exam_id }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-2">
+                    <span class="badge {% if question.status == 'pending' %}bg-warning{% elif question.status == 'approved' %}bg-success{% else %}bg-danger{% endif %}">
+                        {{ question.status|title }}
+                    </span>
+                </div>
+                
+                {% if question.job_id %}
+                <div class="mt-2">
+                    <small class="text-muted">
+                        <i class="fas fa-link me-1"></i>Job: {{ question.job_id[:8] }}...
+                    </small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="d-flex justify-content-center mt-4">
+    <nav>
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+            <li class="page-item active">
+                <span class="page-link">1</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">Next</span>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+    <h4 class="text-muted">No questions found</h4>
+    <p class="text-muted">Upload a PDF and wait for it to be processed</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">
+        <i class="fas fa-upload me-2"></i>Upload PDF
+    </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+function editQuestion(questionId) {
+    // TODO: Implement edit functionality
+    alert('Edit functionality coming soon!');
+}
+
+function deleteQuestion(questionId) {
+    if (confirm('Are you sure you want to delete this question?')) {
+        // TODO: Implement delete functionality
+        alert('Delete functionality coming soon!');
+    }
+}
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const questions = document.querySelectorAll('.question-item');
+    
+    questions.forEach(question => {
+        const questionText = question.dataset.question;
+        if (questionText.includes(searchTerm)) {
+            question.style.display = 'block';
+        } else {
+            question.style.display = 'none';
+        }
+    });
+});
+
+// Filter functionality
+document.getElementById('statusFilter').addEventListener('change', filterQuestions);
+document.getElementById('categoryFilter').addEventListener('change', filterQuestions);
+
+function filterQuestions() {
+    const statusFilter = document.getElementById('statusFilter').value;
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const questions = document.querySelectorAll('.question-item');
+    
+    questions.forEach(question => {
+    
+        const status = question.dataset.status;
+        const category = question.dataset.category;
+        
+        let show = true;
+        
+        if (statusFilter && status !== statusFilter) {
+            show = false;
+        }
+        
+        if (categoryFilter && category !== categoryFilter) {
+            show = false;
+        }
+        
+        question.style.display = show ? 'block' : 'none';
+    });
+}
+</script>
+{% endblock %}

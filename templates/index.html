@@ -1,0 +1,877 @@
+{% extends "base.html" %} {% block title %}Upload PDF - Hybrid PDF Processor{%
+endblock %} {% block content %}
+<div class="column-3">
+  <div class="col-lg-14 mx-auto">
+    <!-- Hero Section -->
+    <div class="text-center ">
+      <div class="card">
+        <div class="card-header" style="background-color: rgb(82, 82, 255);" style="width: 100%">
+          <h4 class="mb-0" style="color: white;"><i class="fas fa-upload me-2"></i>Submit Your Question</h4>
+          <p class="mb-0 mt-2 text-muted"></p>
+        </div>
+        <div class="card-body">
+          <form id="upload-form" enctype="multipart/form-data">
+            <!-- File Upload Section -->
+
+            <!-- Metadata Fields Section -->
+            <div class="mt-5">
+              <div class="text-center mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                   
+                    <div class="mb-3">
+                      <label for="user_id" class="form-label">User ID</label>
+                      <select class="form-select" id="user_id" name="user_id">
+                        <option value="">Select User</option>
+                      </select>
+                    </div>
+              </div>
+
+              <div class="row g-2">
+                <!-- Basic Question Info -->
+                <div class="col">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <label
+                          for="entrance_exam_master_entrance_exam_id"
+                          class="form-label"
+                          > Exam Name</label
+                        >
+                        <select
+                          class="form-select"
+                          id="entrance_exam_master_entrance_exam_id"
+                          name="entrance_exam_master_entrance_exam_id"
+                        >
+                          <option value="">Use Default (Exam 1)</option>
+                        </select>
+                      </div>
+                       <div class="mb-3">
+                        <label
+                          for="chapter_master_chapter_id"
+                          class="form-label"
+                          >Chapter</label
+                        >
+                        <select
+                          class="form-select"
+                          id="chapter_master_chapter_id"
+                          name="chapter_master_chapter_id"
+                        >
+                          <option value="">Use Default (Chapter )</option>
+                        </select>
+                      </div>
+                       <div class="mb-3">
+                      <label
+                        for="year_of_appearance_year_of_appearance_id"
+                        class="form-label"
+                        >Year of Appearance</label
+                      >
+                      <select
+                        class="form-select"
+                        id="year_of_appearance_year_of_appearance_id"
+                        name="year_of_appearance_year_of_appearance_id"
+                      >
+                        <option value="">Use Default (Year 10)</option>
+                      </select>
+                    </div>
+
+                      <div class="mb-3">
+                        <label for="marks" class="form-label">Marks</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="marks"
+                          name="marks"
+                          min="1"
+                          max="100"
+                          placeholder="Default: 2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="card h-100">
+                    <div class="card-body">
+                          <div class="mb-3">
+                        <label
+                          for="standard_master_standard_id"
+                          class="form-label"
+                          >Standard/Grade</label
+                        >
+                        <select
+                          class="form-select"
+                          id="standard_master_standard_id"
+                          name="standard_master_standard_id"
+                        >
+                          <option value="">Use Default (Standard 2)</option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                      <label for="topic_master_topic_id" class="form-label"
+                        >Topic</label
+                      >
+                      <select
+                        class="form-select"
+                        id="topic_master_topic_id"
+                        name="topic_master_topic_id"
+                      >
+                        <option value="">Use Default (Topic 1)</option>
+                      </select>
+                    </div>
+                      <div class="mb-3">
+                      <label
+                        for="question_type_question_type_id"
+                        class="form-label"
+                        >Question Type</label
+                      >
+                      <select
+                        class="form-select"
+                        id="question_type_question_type_id"
+                        name="question_type_question_type_id"
+                      >
+                        <option value="">Use Default (Type 1)</option>
+                      </select>
+                    </div>
+                     
+                     <div class="mb-3">
+                        <label for="question_category" class="form-label"
+                          >Question Category</label
+                        >
+                        <select
+                          class="form-select"
+                          id="question_category"
+                          name="question_category"
+                        >
+                          <option value="">Use Default (Numerical)</option>
+                          <option value="Numerical">Numerical</option>
+                          <option value="Theoretical">Theoretical</option>
+                          <option value="Conceptual">Conceptual</option>
+                          <option value="Practical">Practical</option>
+                        </select>
+                      </div>
+
+                     
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Standard & Level -->
+                <div class="col">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <label
+                          for="subject_master_subject_id"
+                          class="form-label"
+                          >Subject</label
+                        >
+                        <select
+                          class="form-select"
+                          id="subject_master_subject_id"
+                          name="subject_master_subject_id"
+                        >
+                          <option value="">Use Default (Subject 7)</option>
+                        </select>
+                      </div>
+                       <div class="mb-3">
+                      <label
+                        for="sub_topic_master_sub_topic_id"
+                        class="form-label"
+                        >Sub-topic</label
+                      >
+                      <select
+                        class="form-select"
+                        id="sub_topic_master_sub_topic_id"
+                        name="sub_topic_master_sub_topic_id"
+                      >
+                        <option value="">Use Default (Sub-topic 1)</option>
+                      </select>
+                    </div>
+                    
+                      <div class="mb-3">
+                        <label
+                          for="question_level_question_level_id"
+                          class="form-label"
+                          >Question Level</label
+                        >
+                        <select
+                          class="form-select"
+                          id="question_level_question_level_id"
+                          name="question_level_question_level_id"
+                        >
+                          <option value="">Use Default (Level 1)</option>
+                        </select>
+                      </div>
+                        <div class="mb-3">
+                        <label
+                          for="pattern_master_pattern_id"
+                          class="form-label"
+                          >Question Pattern</label
+                        >
+                        <select
+                          class="form-select"
+                          id="pattern_master_pattern_id"
+                          name="pattern_master_pattern_id"
+                        >
+                          <option value="">Use Default (Pattern 1)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="row g-2">
+                <!-- Exam & Pattern -->
+                <div class="col">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      
+                    
+
+                    
+                    </div>
+                  </div>
+                </div>
+              
+
+              <!-- Question Type & Year -->
+              <div class="col">
+                <div class="card h-100">
+                  <div class="card-body">
+                   
+                  
+
+                   
+                  </div>
+                </div>
+              </div>
+
+              <!-- Topic & Sub-topic -->
+              <div class="col">
+                <div class="card h-100">
+                  <div class="card-body">
+                     
+                    
+
+                   
+                  </div>
+                </div>
+              </div>
+</div>
+<div class="row">
+              <!-- User & Status -->
+              <div class="col-md-6">
+                
+
+                    <!-- <div class="mb-3">
+                      <label for="asked_status" class="form-label"
+                        >Asked Status</label
+                      >
+                      <select
+                        class="form-select"
+                        id="asked_status"
+                        name="asked_status"
+                      >
+                        <option value="">Use Default (Pending)</option>
+                        <option value="pending">Pending</option>
+                        <option value="asked">Asked</option>
+                        <option value="not_asked">Not Asked</option>
+                      </select>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Additional Fields -->
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                   
+                    <!-- <div class="mb-3">
+                      <label for="asked" class="form-label"
+                        >Asked (Yes/No)</label
+                      >
+                      <select class="form-select" id="asked" name="asked">
+                        <option value="">Use Default (True)</option>
+                        <option value="True">Yes</option>
+                        <option value="False">No</option>
+                      </select>
+                    </div> -->
+
+                    <!-- <div class="mb-3">
+                      <label for="status" class="form-label"
+                        >Processing Status</label
+                      >
+                      <select class="form-select" id="status" name="status">
+                        <option value="">Use Default (Pending)</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="completed">Completed</option>
+                        <option value="error">Error</option>
+                      </select>
+                    </div> -->
+
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="upload-area" id="upload-area">
+              <div class="upload-icon" id="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <h4 class="text-dark mb-3" id="upload-title">
+                Drag & Drop your PDF file here
+              </h4>
+              <p class="text-muted mb-4" id="upload-subtitle">
+                or click to browse your files
+              </p>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                accept=".pdf"
+                class="form-control d-none"
+                required
+              />
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-lg"
+                onclick="document.getElementById('file').click()"
+              >
+                <i class="fas fa-folder-open me-2"></i>Choose File
+              </button>
+              <div class="mt-3">
+                <small class="text-muted">
+                  <i class="fas fa-info-circle me-1"></i>
+                  Maximum file size: 16MB • Supported format: PDF
+                </small>
+              </div>
+              <div id="file-info" style="display: none" class="mt-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="text-success mb-2" id="file-name">
+                      <i class="fas fa-file-pdf me-2"></i>
+                    </h5>
+                    <p class="text-muted mb-0" id="file-size"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 text-center">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg px-5 py-3"
+                id="upload-btn"
+              >
+                <i class="fas fa-upload me-2"></i>Start
+              </button>
+              <p class="text-muted mt-3 mb-0">
+                <i class="fas fa-info-circle me-1"></i>
+              </p>
+            </div>
+          </form>
+
+          <!-- Status Section -->
+          <div id="status-section" class="mt-5" style="display: none">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">
+                  <i class="fas fa-check-circle me-2"></i>Processing Started
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="card mb-4">
+                  <div class="card-body text-center">
+                    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                    <h5 class="text-success mb-2">
+                      PDF Successfully Added to Queue!
+                    </h5>
+                    <p id="status-message" class="text-muted">
+                      Your PDF has been added to the processing queue. Our AI
+                      system will process it shortly.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="text-dark mb-2">
+                          <i class="fas fa-fingerprint me-2"></i>Job ID
+                        </h6>
+                        <code id="job-id" class="text-primary"></code>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <a href="/queue" class="btn btn-outline-primary w-100">
+                      <i class="fas fa-list me-1"></i>View Queue
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Status -->
+      <div class="row mt-5">
+        <div class="col-md-6">
+          <div class="card pc-status">
+            <div class="card-body">
+              <i class="fas fa-desktop"></i>
+              <h5 class="text-dark mb-2">PC Processors</h5>
+              <h3 class="text-primary mb-2" id="pc-count">Loading...</h3>
+              <small class="text-muted">Local machines processing PDFs</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pc-status">
+            <div class="card-body">
+              <i class="fas fa-tasks"></i>
+              <h5 class="text-dark mb-2">Queue Status</h5>
+              <h3 class="text-primary mb-2" id="queue-count">Loading...</h3>
+              <small class="text-muted">PDFs waiting for processing</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it Works -->
+      <div class="card mt-5">
+        <div class="card-header">
+          <h4 class="mb-0"><i class="fas fa-cogs me-2"></i>Flow</h4>
+          <p class="mb-0 mt-2 text-muted">Working</p>
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-3 text-center">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <i class="fas fa-upload fa-3x text-primary"></i>
+                  </div>
+                  <h6 class="text-dark mb-2">1. Upload PDF</h6>
+                  <p class="text-muted mb-0">
+                    Upload your PDF document to our server
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <i class="fas fa-clock fa-3x text-warning"></i>
+                  </div>
+                  <h6 class="text-dark mb-2">2. Queue Processing</h6>
+                  <p class="text-muted mb-0">
+                    Document is added to processing queue
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <i class="fas fa-brain fa-3x text-success"></i>
+                  </div>
+                  <h6 class="text-dark mb-2">3. AI Processing</h6>
+                  <p class="text-muted mb-0">
+                    AI extracts and structures questions
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <i class="fas fa-database fa-3x text-info"></i>
+                  </div>
+                  <h6 class="text-dark mb-2">4. Results Ready</h6>
+                  <p class="text-muted mb-0">
+                    Questions are stored and available
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %} {% block scripts %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Subject-Chapter Dynamic Dropdown
+      document
+        .getElementById("subject_master_subject_id")
+        .addEventListener("change", function () {
+          const subjectId = this.value;
+          const chapterDropdown = document.getElementById(
+            "chapter_master_chapter_id"
+          );
+
+          // Clear existing options except the first one
+          chapterDropdown.innerHTML =
+            '<option value="">Use Default (Chapter 69)</option>';
+
+          if (!subjectId) {
+            return;
+          }
+
+          // Try MySQL endpoint first, fallback to SQLite
+          fetch(`/api/chapters_by_subject_mysql/${subjectId}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("MySQL endpoint failed");
+              }
+              return response.json();
+            })
+            .catch(() => {
+              // Fallback to SQLite endpoint
+              return fetch(`/api/chapters_by_subject/${subjectId}`).then(
+                (response) => response.json()
+              );
+            })
+            .then((data) => {
+              if (data && data.length > 0) {
+                data.forEach((chapter) => {
+                  const option = document.createElement("option");
+                  option.value = chapter.id;
+                  option.textContent = chapter.name;
+                  chapterDropdown.appendChild(option);
+                });
+              } else {
+                // Add a message if no chapters found
+                const option = document.createElement("option");
+                option.value = "";
+                option.textContent = "No chapters found for this subject";
+                option.disabled = true;
+                chapterDropdown.appendChild(option);
+              }
+            })
+            .catch((error) => {
+              console.error("Error loading chapters:", error);
+              const option = document.createElement("option");
+              option.value = "";
+              option.textContent = "Error loading chapters";
+              option.disabled = true;
+              chapterDropdown.appendChild(option);
+            });
+        });
+    });
+  </script>
+
+  <script>
+    // File upload handling
+    document.getElementById("file").addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        // Update the display elements
+        const uploadIcon = document.getElementById("upload-icon");
+        uploadIcon.innerHTML = '<i class="fas fa-file-pdf"></i>';
+        uploadIcon.style.color = "var(--success-color)";
+
+        document.getElementById("upload-title").textContent = "File Selected!";
+        document.getElementById("upload-title").className = "text-success";
+        document.getElementById("upload-subtitle").textContent =
+          "Ready to process";
+
+        // Show file info
+        const fileInfo = document.getElementById("file-info");
+        fileInfo.style.display = "block";
+
+        document.getElementById(
+          "file-name"
+        ).innerHTML = `<i class="fas fa-file-pdf me-2"></i>${file.name}`;
+        document.getElementById("file-size").textContent = `Size: ${(
+          file.size /
+          1024 /
+          1024
+        ).toFixed(2)} MB`;
+      }
+    });
+
+    // Enhanced drag and drop functionality
+    const uploadArea = document.getElementById("upload-area");
+
+    uploadArea.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      uploadArea.classList.add("dragover");
+    });
+
+    uploadArea.addEventListener("dragleave", function (e) {
+      e.preventDefault();
+      uploadArea.classList.remove("dragover");
+    });
+
+    uploadArea.addEventListener("drop", function (e) {
+      e.preventDefault();
+      uploadArea.classList.remove("dragover");
+
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        const file = files[0];
+        if (file.type === "application/pdf") {
+          document.getElementById("file").files = files;
+          document.getElementById("file").dispatchEvent(new Event("change"));
+        } else {
+          alert("Please select a PDF file.");
+        }
+      }
+    });
+
+    // Populate dynamic masters
+    function populateSelect(
+      selectId,
+      items,
+      idKey = "id",
+      nameKey = "name",
+      defaultLabel = ""
+    ) {
+      const sel = document.getElementById(selectId);
+      if (!sel) return;
+      const first = sel.querySelector("option");
+      sel.innerHTML = "";
+      if (first && first.value === "") {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = first.textContent || defaultLabel;
+        sel.appendChild(opt);
+      } else if (defaultLabel) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = defaultLabel;
+        sel.appendChild(opt);
+      }
+      items.forEach((it) => {
+        const opt = document.createElement("option");
+        opt.value = it[idKey];
+        opt.textContent = it[nameKey];
+        sel.appendChild(opt);
+      });
+    }
+
+    function loadMastersPreferExternal() {
+      return fetch("/api/masters_mysql")
+        .then((r) => {
+          if (!r.ok) throw new Error("MySQL failed");
+          return r.json();
+        })
+        .catch(() => fetch("/api/masters").then((r) => r.json()));
+    }
+
+    function loadMasters() {
+      loadMastersPreferExternal()
+        .then((data) => {
+          populateSelect(
+            "subject_master_subject_id",
+            data.subjects,
+            "id",
+            "name",
+            "Use Default (Subject 7)"
+          );
+          populateSelect(
+            "chapter_master_chapter_id",
+            data.chapters,
+            "id",
+            "name",
+            "Use Default (Chapter 69)"
+          );
+          populateSelect(
+            "standard_master_standard_id",
+            data.standards,
+            "id",
+            "name",
+            "Use Default (Standard 2)"
+          );
+          populateSelect(
+            "question_level_question_level_id",
+            data.levels,
+            "id",
+            "name",
+            "Use Default (Level 1)"
+          );
+          populateSelect(
+            "entrance_exam_master_entrance_exam_id",
+            data.exams,
+            "id",
+            "name",
+            "Use Default (Exam 1)"
+          );
+          populateSelect(
+            "pattern_master_pattern_id",
+            data.patterns,
+            "id",
+            "name",
+            "Use Default (Pattern 1)"
+          );
+          populateSelect(
+            "question_type_question_type_id",
+            data.types,
+            "id",
+            "name",
+            "Use Default (Type 1)"
+          );
+          populateSelect(
+            "year_of_appearance_year_of_appearance_id",
+            data.years,
+            "id",
+            "name",
+            "Use Default (Year 10)"
+          );
+          populateSelect(
+            "topic_master_topic_id",
+            data.topics,
+            "id",
+            "name",
+            "Use Default (Topic 1)"
+          );
+          populateSelect(
+            "sub_topic_master_sub_topic_id",
+            data.sub_topics,
+            "id",
+            "name",
+            "Use Default (Sub-topic 1)"
+          );
+          populateSelect(
+            "user_id",
+            data.users,
+            "id",
+            "name",
+            "Use Default (User 1)"
+          );
+        })
+        .catch(() => {
+          // Leave defaults if both endpoints fail
+        });
+    }
+
+    loadMasters();
+
+    document
+      .getElementById("upload-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById("file");
+        const file = fileInput.files[0];
+
+        if (!file) {
+          alert("Please select a PDF file");
+          return;
+        }
+
+        // Show loading state
+        const submitBtn = document.getElementById("upload-btn");
+        const originalText = showButtonLoading(submitBtn, "Processing...");
+
+        // Upload file with metadata
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Add metadata fields
+        const metadataFields = [
+          "question_category",
+          "marks",
+          "subject_master_subject_id",
+          "chapter_master_chapter_id",
+          "standard_master_standard_id",
+          "question_level_question_level_id",
+          "entrance_exam_master_entrance_exam_id",
+          "pattern_master_pattern_id",
+          "question_type_question_type_id",
+          "year_of_appearance_year_of_appearance_id",
+          "topic_master_topic_id",
+          "sub_topic_master_sub_topic_id",
+          "user_id",
+        //   "asked_status",
+        //   "asked",
+        //   "status",
+        ];
+
+        metadataFields.forEach((field) => {
+          const value = document.getElementById(field).value;
+          if (value) {
+            formData.append(field, value);
+          }
+        });
+
+        fetch("/upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.job_id) {
+              // Show success
+              document.getElementById("status-section").style.display = "block";
+              document.getElementById("job-id").textContent = data.job_id;
+              document.getElementById("status-message").textContent =
+                data.message;
+
+              // Reset form
+              document.getElementById("upload-form").reset();
+              document.getElementById("file-info").style.display = "none";
+
+              const uploadIcon = document.getElementById("upload-icon");
+              uploadIcon.innerHTML = '<i class="fas fa-cloud-upload-alt"></i>';
+              uploadIcon.style.color = "var(--primary-color)";
+
+              document.getElementById("upload-title").textContent =
+                "Drag & Drop your PDF file here";
+              document.getElementById("upload-title").className = "text-dark";
+              document.getElementById("upload-subtitle").textContent =
+                "or click to browse your files";
+
+              // Reload masters to restore options after reset
+              loadMasters();
+            } else {
+              throw new Error(data.error || "Upload failed");
+            }
+          })
+          .catch((error) => {
+            alert("Upload failed: " + error.message);
+          })
+          .finally(() => {
+            hideButtonLoading(submitBtn, originalText);
+          });
+      });
+
+    // Load system status
+    function loadSystemStatus() {
+      // Load PC status
+      fetch("/api/pc_status")
+        .then((response) => response.json())
+        .then((data) => {
+          const onlinePCs = data.filter((pc) => {
+            const lastHeartbeat = new Date(pc.last_heartbeat);
+            const now = new Date();
+            return now - lastHeartbeat < 60000; // 1 minute
+          });
+          document.getElementById(
+            "pc-count"
+          ).textContent = `${onlinePCs.length} Online`;
+        })
+        .catch((error) => {
+          document.getElementById("pc-count").textContent = "Error";
+        });
+    }
+
+    // Load system status on page load
+    loadSystemStatus();
+    setInterval(loadSystemStatus, 30000); // Update every 30 seconds
+  </script>
+  {% endblock %}
+</div>
